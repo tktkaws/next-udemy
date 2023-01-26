@@ -5,10 +5,23 @@ import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import utilStyles from "../styles/utils.module.css";
+import { getPostData } from "../lib/post";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+// SSGの場合
+export async function getStaticProps() {
+  const allPostsData = getPostData();
+  console.log(allPostsData);
+
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+}
+
+export default function Home({ allPostsData }) {
   return (
     <Layout>
       <section className={utilStyles.headingMd}>
@@ -17,62 +30,26 @@ export default function Home() {
       </section>
       <section></section>
       <div className={styles.grid}>
-        <article>
-          <Link href="/">
-            <img
-              src="/images/thumbnail01.jpg"
-              alt=""
-              className={styles.thumbnailImage}
-            />
-          </Link>
-          <Link href="/">
-            <p className={utilStyles.boldText}>first post</p>
-          </Link>
-          <br />
-          <small className={utilStyles.lightText}>January 25</small>
-        </article>
-        <article>
-          <Link href="/">
-            <img
-              src="/images/thumbnail01.jpg"
-              alt=""
-              className={styles.thumbnailImage}
-            />
-          </Link>
-          <Link href="/">
-            <p className={utilStyles.boldText}>first post</p>
-          </Link>
-          <br />
-          <small className={utilStyles.lightText}>January 25</small>
-        </article>
-        <article>
-          <Link href="/">
-            <img
-              src="/images/thumbnail01.jpg"
-              alt=""
-              className={styles.thumbnailImage}
-            />
-          </Link>
-          <Link href="/">
-            <p className={utilStyles.boldText}>first post</p>
-          </Link>
-          <br />
-          <small className={utilStyles.lightText}>January 25</small>
-        </article>
-        <article>
-          <Link href="/">
-            <img
-              src="/images/thumbnail01.jpg"
-              alt=""
-              className={styles.thumbnailImage}
-            />
-          </Link>
-          <Link href="/">
-            <p className={utilStyles.boldText}>first post</p>
-          </Link>
-          <br />
-          <small className={utilStyles.lightText}>January 25</small>
-        </article>
+        {/* 1つ１つのブログをdivで生成してgrid適用させる */}
+        {allPostsData.map(({ id, date, title, thumbnail }) => (
+          <article key={id}>
+            <Link href={`/posts/${id}`}>
+              <img
+                src={`${thumbnail}`}
+                className={`${styles.thumbnailImage}`}
+              />
+            </Link>
+            <Link href={`/posts/${id}`}>
+              <p className={utilStyles.boldText}>{title}</p>
+            </Link>
+
+            <br />
+
+            <small className={utilStyles.lightText}>
+              <Date dateString={date} />
+            </small>
+          </article>
+        ))}
       </div>
     </Layout>
   );
