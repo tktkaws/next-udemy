@@ -6,6 +6,7 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import utilStyles from "../styles/utils.module.css";
 import { getPostData } from "../lib/post";
+// import Date from "../components/date";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,9 +46,9 @@ export default function Home({ allPostsData }) {
 
             <br />
 
-            <small className={utilStyles.lightText}>
+            {/* <small className={utilStyles.lightText}>
               <Date dateString={date} />
-            </small>
+            </small> */}
           </article>
         ))}
       </div>

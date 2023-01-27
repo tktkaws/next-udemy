@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { getAllPostIds, getPostDataID } from "../../lib/post";
 import utilStyles from "../../styles/utils.module.css";
+// import Date from "../../components/date";
 
 //動的ルーティング設定のための関数。pathsがルーティング設定になっている(開発環境なら毎回リクエスト時に実行される、本番環境ならビルド時だけ実行される。)。
 //idがとりうる値のリストを返す
@@ -26,12 +27,12 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export default function ({ postData }) {
+export default function Post({ postData }) {
   return (
     <Layout>
       <article>
         <h1 className={utilStyles.headingX1}>{postData.title}</h1>
-        <div className={utilStyles.lightText}>{postData.date}</div>
+        {/* <div className={utilStyles.lightText}>{postData.date}</div> */}
         <div dangerouslySetInnerHTML={{ __html: postData.blogContentHTML }} />
       </article>
     </Layout>
