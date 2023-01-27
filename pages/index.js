@@ -23,7 +23,7 @@ export async function getStaticProps() {
 
 export default function Home({ allPostsData }) {
   return (
-    <Layout>
+    <Layout home>
       <section className={utilStyles.headingMd}>
         <p>next.jsで作成したJamstackブログ</p>
         <h2>✍tktkのブログ</h2>
